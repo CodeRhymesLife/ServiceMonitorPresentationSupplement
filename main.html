@@ -1,0 +1,70 @@
+<head>
+  <title>Software Development Monitor</title>
+</head>
+
+<body>
+	{{> ChooseTemplate }}
+</body>
+
+<template name="ChooseTemplate">
+	{{#with renderAdmin}}
+		{{> Admin}}
+		{{> Rank}}
+	{{/with}}
+	
+	{{#with renderEnterName}}
+		{{> EnterName}}
+	{{/with}}
+	
+	{{#with renderManualMonitor}}
+		{{> ManualMonitor}}
+	{{/with}}
+	
+	{{#with renderRank}}
+		{{> Rank}}
+	{{/with}}
+</template>
+
+<template name="Admin">
+	<h1>Admin</h1>
+	isMonitor: {{isMonitor}}
+	<br>
+	isUp: {{isUp}}
+	<br>
+	<button class="toggleIsUp">Toggle isUp</button>
+	<br>
+	<button class="addMonitor">Add Monitor</button>
+	<br>
+	<br>
+	<br>
+	<br>
+	<button class="startOver">Start Over</button>
+</template>
+
+<template name="EnterName">
+	<h1>What is your name?</h1>
+	<input class="enterName" type="text" placeholder="Enter name here..."></input>
+	<button>Submit</button>
+</template>
+
+<template name="ManualMonitor">
+	<h1>Click the button below to check service health</h1>
+	<div class="manualMonitor">Test</div>
+</template>
+
+<template name="Rank">
+	<h1>Rank</h1>
+	<div class="rank">
+		{{#each people}}
+			{{> person}}
+		{{/each}}
+	</div>
+</template>
+
+<template name="person">
+	<div class="person">
+		<div class="personName">{{name}}</div>
+		<div class="personTime">{{time}}</div>
+		<div class="clear"></div>
+	</div>
+</template>

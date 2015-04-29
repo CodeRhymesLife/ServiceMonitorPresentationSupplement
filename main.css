@@ -1,0 +1,67 @@
+/* CSS declarations go here */
+html, body {
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	font-size: 24px;
+	font-family: helvatica
+}
+
+.center {
+	text-align: center;
+	margin-left: 0 auto;
+	max-width: 1366px;
+	min-width: 320px;
+}
+
+.center *{
+	margin: 0 auto;
+}
+
+.center h1 {
+	margin-bottom: 40px;
+}
+
+.enterName, button {
+	font-size: 24px;
+}
+
+.manualMonitor {
+	display: inline-block;
+	margin: 0 auto;
+	border-radius: 10px;
+    border: 2px solid black;
+    padding: 20px; 
+	font-size: 24px;
+	text-align: center;
+}
+
+.manualMonitor:hover {
+	cursor: pointer;
+}
+
+.rank {
+	text-align: left
+	width: 100%;
+	max-width: 500px;
+	border-radius: 25px;
+    border: 2px solid black;
+    padding: 20px; 
+}
+
+.clear {
+    clear: both;
+}
+
+.person {
+	padding: 20px 10px;
+	border-bottom: 1px solid black;
+}
+
+.personName {
+	float: left;
+}
+
+.personTime {
+	float: right;
+}
