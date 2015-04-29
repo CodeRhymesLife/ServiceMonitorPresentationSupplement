@@ -9,6 +9,7 @@
 <template name="ChooseTemplate">
 	{{#with renderAdmin}}
 		{{> Admin}}
+		{{> Wall}}
 		{{> Rank}}
 	{{/with}}
 	
@@ -16,13 +17,23 @@
 		{{> EnterName}}
 	{{/with}}
 	
-	{{#with renderManualMonitor}}
-		{{> ManualMonitor}}
+	{{#with renderWall}}
+		{{> Wall}}
 	{{/with}}
 	
 	{{#with renderRank}}
 		{{> Rank}}
 	{{/with}}
+	
+	{{#with renderReportError}}
+		{{> ReportError}}
+	{{/with}}
+	
+	<ul class="footer">
+		<li><a href="#">Terms of use</a></li>
+		<li><a href="#">Contact us</a></li>
+		<li><a href="#" onClick="Session.set('step', 'reportError');">Report a problem</a></li>
+	</ul>
 </template>
 
 <template name="Admin">
@@ -47,24 +58,51 @@
 	<button>Submit</button>
 </template>
 
-<template name="ManualMonitor">
-	<h1>Click the button below to check service health</h1>
-	<div class="manualMonitor">Test</div>
-</template>
-
-<template name="Rank">
-	<h1>Rank</h1>
-	<div class="rank">
-		{{#each people}}
-			{{> person}}
+<template name="Wall">
+	<h1>BIME 539 Wall</h1>
+	<input class="submitPost" type="text" placeholder="Enter post here..."></input>
+	<button>Submit</button>
+	<div class="posts">
+		{{#each posts}}
+			{{> post}}
 		{{/each}}
 	</div>
 </template>
 
-<template name="person">
-	<div class="person">
-		<div class="personName">{{name}}</div>
-		<div class="personTime">{{time}}</div>
-		<div class="clear"></div>
+<template name="post">
+	<div class="post">
+		<b>{{name}}:</b> {{message}}
 	</div>
+</template>
+
+<template name="ReportError">
+	<h1>Report an Error</h1>
+	<p>Please include a detailed message</p>
+	<input class="submitError" type="text" placeholder="Enter error here..."></input>
+	<button>Submit</button>
+</template>
+
+<template name="Rank">
+	<h1>Error Reports</h1>
+	<table class="rank">
+		<tbody>
+			<tr>
+				<th>Name</th>
+				<th>Time elapsed</th>
+				<th>Message</th>
+			</tr>
+			
+			{{#each errors}}
+				{{> error}}
+			{{/each}}
+		</tbody>
+	</table>
+</template>
+
+<template name="error">
+	<tr>
+		<td>{{person}}</td>
+		<td>{{time}}</td>
+		<td>{{message}}</td>
+	</tr>
 </template>

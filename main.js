@@ -1,5 +1,6 @@
-Times = new Meteor.Collection("times")
+Errors = new Meteor.Collection("errors")
 Status = new Meteor.Collection("status");
+Posts = new Meteor.Collection("posts");
 
 if (Meteor.isServer) {
 	Meteor.startup(function () {
@@ -16,7 +17,8 @@ if (Meteor.isServer) {
 					{ $set: { isUp: true, isMonitor: true }}
 				);
 				
-				Times.remove({});
+				Errors.remove({});
+				Posts.remove({});
 			},
 			
 			toggleIsUp: function (downTime) {
@@ -32,7 +34,8 @@ if (Meteor.isServer) {
 					{ code: 1 },
 					{ $set: { isUp: true, isMonitor: false }}
 				);
-				Times.remove({});
+				Errors.remove({});
+				Posts.remove({});
 			}
 		});
 	});
@@ -41,7 +44,8 @@ if (Meteor.isServer) {
 if (Meteor.isClient) {
 	
 	Meteor.startup(function () {
-		Session.set("step", "enterName");
+		if(Session.get("step") == null)
+			Session.set("step", "enterName");
 	});
 	
 	Template.ChooseTemplate.helpers({
@@ -53,12 +57,16 @@ if (Meteor.isClient) {
 			return Session.get("step") == "enterName";
 		},
 		
-		renderManualMonitor: function() {
-			return Session.get("step") == "manualMonitor";
+		renderWall: function() {
+			return Session.get("step") == "wall";
 		},
 		
 		renderRank: function() {
 			return Session.get("step") == "rank";
+		},
+		
+		renderReportError: function() {
+			return Session.get("step") == "reportError";
 		},
 	});
 
@@ -94,35 +102,64 @@ if (Meteor.isClient) {
 			
 			if(Session.get("name") != null &&
 				Session.get("name").length > 0) {
-				Session.set("step", "manualMonitor");
+				Session.set("step", "wall");
 			}
 		}
 	});
 	
-	Template.ManualMonitor.events({
-		"click .manualMonitor": function (event, template) {
+	Template.Wall.events({
+		"click button": function (event, template) {
 			var status = Status.findOne({ code: 1});
 			if (status.isUp) {
-				alert("Service is up");
+				Posts.insert({
+					name: Session.get("name"),
+					message: $(".submitPost").val(),
+				});
 			}
 			else {
-				Times.insert({
-					name: Session.get("name"),
-					time: (Date.now() - status.downTime) / 1000 + "sec",
+				alert("Bee boop. Bee boop. Error! Please report.");
+			}
+			
+		}
+	});
+	
+	Template.Wall.helpers({
+		posts: function() {
+			return Posts.find();
+		}
+	});
+	
+	Template.ReportError.events({
+		
+		"click button": function (event, template) {
+			var status = Status.findOne({ code: 1});
+			if (status.isUp) {
+				alert("Nothing is wrong...don't cheat!");
+			}
+			else {
+				Errors.insert({
+					person: Session.get("name"),
+					time: (Date.now() - status.downTime) / 1000 + " sec",
+					message: $(".submitError").val(),
 				});
+				alert("Thank you for submitting your error report.");
 				Session.set("step", "rank");
 			}
+			
 		}
 	});
   
 	Template.Rank.helpers({
-		people: function() {
-			var people = Times.find().fetch();
+		errors: function() {
+			var errors = Errors.find().fetch();
 			var status = Status.findOne({ code: 1});
 			if(status && status.isMonitor)
-				people.unshift({ name: "Service Monitor", time: "0.010 sec" });
+				errors.unshift({
+					person: "Service Monitor",
+					time: "0.010 sec",
+					message: "A malicious message was sent to our server around " + new Date(0.01 + status.downTime / 1000).toString() + ". Engineers have been alerted." });
 			
-			return people;
+			return errors;
 		}
 	});
 	
@@ -130,9 +167,9 @@ if (Meteor.isClient) {
 		var status = Status.findOne({ code: 1});
 		if(status && status.isUp && Session.get("step") == "rank" ){
 			if(status && status.isMonitor)
-				alert("Resetting. Except this time there's a monitor. Muhahaha!!!");
+				alert("Resetting. This time there's a monitor. Good luck!");
 			
-			Session.set("step", "manualMonitor");
+			Session.set("step", "wall");
 		}
 	});
 }

@@ -7,8 +7,21 @@ html, body {
 	font-family: helvatica
 }
 
+ul.footer {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+ul.footer li {
+	float: left;
+	margin-right: 10px;
+}
+
 .center {
-	text-align: center;
 	margin-left: 0 auto;
 	max-width: 1366px;
 	min-width: 320px;
@@ -22,18 +35,19 @@ html, body {
 	margin-bottom: 40px;
 }
 
-.enterName, button {
+input, button {
 	font-size: 24px;
 }
 
-.manualMonitor {
-	display: inline-block;
+.posts {
 	margin: 0 auto;
 	border-radius: 10px;
     border: 2px solid black;
     padding: 20px; 
 	font-size: 24px;
 	text-align: center;
+	height: 400px;
+	overflow: auto;
 }
 
 .manualMonitor:hover {
@@ -43,25 +57,14 @@ html, body {
 .rank {
 	text-align: left
 	width: 100%;
-	max-width: 500px;
 	border-radius: 25px;
     border: 2px solid black;
     padding: 20px; 
 }
 
-.clear {
-    clear: both;
-}
-
-.person {
-	padding: 20px 10px;
-	border-bottom: 1px solid black;
-}
-
-.personName {
-	float: left;
-}
-
-.personTime {
-	float: right;
+table>thead>tr>th, table>tbody>tr>th, table>tfoot>tr>th, table>thead>tr>td, table>tbody>tr>td, table>tfoot>tr>td {
+  padding: 8px;
+  line-height: 1.42857143;
+  vertical-align: top;
+  border-top: 1px solid #ddd;
 }
