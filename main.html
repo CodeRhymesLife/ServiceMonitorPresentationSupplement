@@ -54,14 +54,14 @@
 
 <template name="EnterName">
 	<h1>What is your name?</h1>
-	<input class="enterName" type="text" placeholder="Enter name here..."></input>
+	<input class="enterName" type="text" placeholder="Enter name here...">
 	<button>Submit</button>
 </template>
 
 <template name="Wall">
 	<h1>BIME 539 Wall</h1>
-	<input class="submitPost" type="text" placeholder="Enter post here..."></input>
-	<button>Submit</button>
+	<input class="submitPost" type="text" placeholder="Enter post here...">
+	<button>Post</button>
 	<div class="posts">
 		{{#each posts}}
 			{{> post}}
@@ -78,7 +78,7 @@
 <template name="ReportError">
 	<h1>Report an Error</h1>
 	<p>Please include a detailed message</p>
-	<input class="submitError" type="text" placeholder="Enter error here..."></input>
+	<input class="submitError" type="text" placeholder="Enter error here...">
 	<button>Submit</button>
 </template>
 
