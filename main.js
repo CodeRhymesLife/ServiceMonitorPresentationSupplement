@@ -155,9 +155,9 @@ if (Meteor.isClient) {
 			var status = Status.findOne({ code: 1});
 			if(status && status.isMonitor)
 				errors.unshift({
-					person: "Service Monitor",
+					person: "Internal Monitor",
 					time: "0.010 sec",
-					message: "A malicious message was sent to our server around " + new Date(0.01 + status.downTime / 1000).toString() + ". Engineers have been alerted." });
+					message: "The primary database went down around " + new Date(0.01 + status.downTime).toString() + ". John Doe (the code owner) and Ryan James (the on call engineer) have been alerted." });
 			
 			return errors;
 		}
